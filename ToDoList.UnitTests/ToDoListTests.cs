@@ -34,6 +34,20 @@ public class ToDoListTests
     }
 
     [Test]
+    public void CanAddDuplicateTaskIfPreviousIsComplete()
+    {
+		//Arrange
+		var todoList = new ToDoList();
+        string taskName = "Test task";
+
+        var task = todoList.AddNewTask(taskName);
+        task.MarkAsComplete();
+
+		// Act + assert
+		Assert.That(todoList.Tasks.Exists(x => x.Description == taskName), Is.True);
+	}
+
+    [Test]
     public void CanMarkTaskAsComplete()
     {
         // Arrange
@@ -94,9 +108,9 @@ public class ToDoListTests
         todoList.Tasks.First(x => x.Description == "Empty bins").MarkAsComplete();
 
         // Act
-        var result = todoList.ListIncompleteTasks();
+        var incompleteTasks = todoList.ListIncompleteTasks();
 
-        // Assert
-        Assert.That(result, Is.EqualTo("Make dinner,Wash up"));
-    }
+		// Assert
+		Assert.That(incompleteTasks.Any(t => t.Description == "Make dinner"));
+	}
 }

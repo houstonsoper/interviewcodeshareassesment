@@ -13,12 +13,19 @@ public class ToDoList
         Tasks = new List<Task>();
     }
 
-    public void AddNewTask(string description, Priority priority = Priority.Medium)
+    public Task AddNewTask(string description, Priority priority = Priority.Medium)
     {
-        if (Tasks.Any(t => t.Description.ToLower() == description.ToLower())) 
-            throw new TaskAlreadyExistsException();
+        var incompleteTasks = ListIncompleteTasks();
 
-		Tasks.Add(new Task(description, priority, DateTime.Now));
+        if (incompleteTasks.Any(t => t.Description.ToLower() == description.ToLower()))
+        {
+			throw new TaskAlreadyExistsException();
+		}
+
+        var task = new Task(description, priority, DateTime.Now);
+		Tasks.Add(task);
+
+        return task;
     }
 
     public void RemoveTask(string description)
@@ -31,19 +38,17 @@ public class ToDoList
             throw new TaskDoesNotExistException();
     }
 
-    public string ListIncompleteTasks()
+    public List<Task> ListIncompleteTasks()
     {
-        StringBuilder taskList = new StringBuilder();
+        var incompleteTasks = new List<Task>();
 
         foreach (var task in Tasks)
         {
             if (!task.Complete)
-                taskList.AppendFormat("{0},", task.Description);
+                incompleteTasks.Add(task);
         }
 
-        taskList.Length--;
-
-        return taskList.ToString();
+        return incompleteTasks;
     }
 }
 
