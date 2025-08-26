@@ -15,7 +15,7 @@ public class ToDoList
 
     public void AddNewTask(string description, Priority priority = Priority.Medium)
     {
-        if (Tasks.Any(t => t.Description == description)) 
+        if (Tasks.Any(t => t.Description.ToLower() == description.ToLower())) 
             throw new TaskAlreadyExistsException();
 
 		Tasks.Add(new Task(description, priority, DateTime.Now));
