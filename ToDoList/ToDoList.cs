@@ -13,7 +13,10 @@ public class ToDoList
 
     public void AddNewTask(string description, Priority priority = Priority.Medium)
     {
-        Tasks.Add(new Task(description, priority, DateTime.Now));
+        if (Tasks.Any(t => t.Description == description)) 
+            throw new TaskAlreadyExistsException();
+
+		Tasks.Add(new Task(description, priority, DateTime.Now));
     }
 
     public void RemoveTask(string description)
