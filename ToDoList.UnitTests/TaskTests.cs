@@ -47,7 +47,7 @@ public class TaskTests
     public void IsOverdue_ShouldReturnTrue_WhenLowTaskIsOverdue()
     {
         // Arrange
-        Task task = new Task("Low Priority Task", Priority.Medium, DateTime.Now.AddDays(31));
+        Task task = new Task("Low Priority Task", Priority.Low, DateTime.Now.AddDays(-31));
 
         // Act
         bool result = task.IsOverdue();
