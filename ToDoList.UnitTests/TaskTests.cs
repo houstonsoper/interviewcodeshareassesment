@@ -1,3 +1,6 @@
+using Task = ToDoList.Models.Task;
+using ToDoList.Models;
+
 namespace ToDoList.UnitTests;
 using NUnit.Framework;
 
